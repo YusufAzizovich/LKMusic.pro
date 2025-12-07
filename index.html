@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <title>LKMusic</title>
 <link rel="icon" type="image/jpg" href="фавикон.jpg">
-<link rel="stylesheet"  href="style.css">
-<style >
+
+<style>
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   background: radial-gradient(circle at top, #121212 0%, #0a0a0a 100%);
@@ -15,8 +15,6 @@ body {
   align-items: center;
   padding: 40px 20px;
   min-height: 100vh;
-
-
 }
 
 h2 {
@@ -71,22 +69,13 @@ audio {
   100% { background-position: 0% 50%; }
 }
 
-.flex-container {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
-  max-width: 700px;
-}
-
 .list-box {
-  flex: 1;
-  min-width: 150px;
   background: rgba(40,40,40,0.7);
   border-radius: 15px;
   padding: 10px;
   box-shadow: 0 0 15px rgba(0,255,136,0.3);
+  margin-bottom: 20px;
+  width: 260px;
 }
 
 .list-box h3 {
@@ -110,6 +99,19 @@ li {
 li:hover { background: rgba(0,255,136,0.15); transform: translateX(3px); }
 li.active { background: rgba(0,255,136,0.15); }
 
+/* 🔥 НЕОНОВАЯ ПОДСВЕТКА АКТИВНОГО ПЛЕЙЛИСТА */
+#playlistList li.active {
+  background: rgba(0, 255, 150, 0.25);
+  box-shadow: 0 0 10px #00ff99, 0 0 20px #00e6ff;
+  transform: translateX(5px);
+  animation: neonGlow 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes neonGlow {
+  from { box-shadow: 0 0 6px #00ff99, 0 0 15px #00e6ff; }
+  to   { box-shadow: 0 0 14px #00ffcc, 0 0 30px #00ccff; }
+}
+
 .delete-btn {
   background: #ff3b3b;
   border: none;
@@ -117,10 +119,7 @@ li.active { background: rgba(0,255,136,0.15); }
   cursor: pointer;
   border-radius: 8px;
   padding: 4px 8px;
-  margin-left:5px;
 }
-.delete-btn:hover { background: #ff6666; }
-
 .edit-btn {
   background: #ffaa00;
   border: none;
@@ -128,11 +127,8 @@ li.active { background: rgba(0,255,136,0.15); }
   cursor: pointer;
   border-radius: 8px;
   padding: 4px 8px;
-  margin-left:5px;
 }
-.edit-btn:hover { background: #ffcc33; }
 
-.history-title { font-weight: bold; text-align: center; color: #00ffcc; margin-bottom: 8px; }
 .toggle-btn {
   width: 100%;
   padding: 10px;
@@ -145,23 +141,111 @@ li.active { background: rgba(0,255,136,0.15); }
   margin-bottom: 8px;
   transition: 0.3s;
 }
-.toggle-btn:hover {
-  transform: scale(1.03);
-}
+.toggle-btn:hover { transform: scale(1.03); }
 
 .collapsible {
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
   opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
 }
 .collapsible.open {
+  max-height: 400px;
   opacity: 1;
-  max-height: 500px;
 }
-s
+/* 📱 МОБИЛЬНАЯ АДАПТАЦИЯ */
+@media (max-width: 600px) {
+
+  body {
+    padding: 20px 10px;
+    align-items: stretch;
+  }
+
+  h2 {
+    font-size: 34px;
+    text-align: center;
+  }
+
+  .player-box {
+    width: 100%;
+    padding: 10px;
+  }
+
+  audio {
+    width: 100%;
+  }
+
+  /* Крупнее кнопки */
+  button, 
+  input[type="file"] {
+    width: 100%;
+    font-size: 18px;
+    padding: 14px;
+    margin: 8px 0;
+    border-radius: 14px;
+  }
+
+  .toggle-btn {
+    font-size: 18px;
+    padding: 14px;
+  }
+
+  /* Блоки списков */
+  .list-box {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .list-box h3 {
+    font-size: 22px;
+  }
+
+  ul li {
+    padding: 14px;
+    font-size: 17px;
+    border-radius: 14px;
+  }
+
+  /* Крупнее кнопки удалить/изменить */
+  .delete-btn,
+  .edit-btn {
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
+  /* Плейлист */
+  #playlist {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  #playlist li {
+    font-size: 18px;
+    padding: 14px 16px;
+  }
+
+  /* Кнопки управления */
+  #prevBtn,
+  #nextBtn,
+  #randomBtn,
+  #shuffleBtn {
+    width: 48%;
+    margin: 5px 1%;
+    font-size: 18px;
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  /* Плейлисты раскрывающийся блок */
+  #playlistsWrapper {
+    max-height: 500px;
+  }
+}
+
 </style>
 </head>
+
 <body>
 
 <h2>🎵 LKMusic</h2>
@@ -178,13 +262,12 @@ s
   </div>
 </div>
 
-
-  <div class="list-box">
-    <h3>История</h3>
-    <ul id="historyList"></ul>
-  </div>
+<div class="list-box">
+  <h3>История</h3>
+  <ul id="historyList"></ul>
 </div>
-  <div class="player-box">
+
+<div class="player-box">
   <audio id="audioPlayer" controls></audio>
 </div>
 
@@ -192,12 +275,12 @@ s
   <button id="prevBtn">< Назад</button>
   <button id="nextBtn">Вперёд ></button>
   <button id="randomBtn">🎲 Рандом</button>
-  <button id="shuffleBtn"><img src="shuffle.png" height="15px" width="15px"> Перемешать</button>
+  <button id="shuffleBtn"><img src="shuffle.png" height="15px"> Перемешать</button>
 </div>
 
 <ul id="playlist"></ul>
 
-<script src="m.js">
+<script>
 const fileInput = document.getElementById('fileInput');
 const audioPlayer = document.getElementById('audioPlayer');
 const playlistEl = document.getElementById('playlist');
@@ -211,7 +294,6 @@ const historyEl = document.getElementById('historyList');
 
 let db, playlists = [], playlist = [], activePlaylistId = null, currentIndex = 0, history = [];
 
-// IndexedDB
 const request = indexedDB.open('offlineMusicDB', 11);
 request.onupgradeneeded = e => {
   db = e.target.result;
@@ -220,7 +302,6 @@ request.onupgradeneeded = e => {
 };
 request.onsuccess = e => { db = e.target.result; loadPlaylists(); loadHistory(); };
 
-// ===== Создание плейлиста =====
 newPlaylistBtn.onclick = () => {
   const name = prompt('Введите название плейлиста:');
   if(!name) return;
@@ -228,130 +309,199 @@ newPlaylistBtn.onclick = () => {
   tx.objectStore('playlists').add({ name, tracks: [] }).onsuccess = loadPlaylists;
 };
 
-// ===== Загрузка и рендер плейлистов =====
 function loadPlaylists() {
-  db.transaction(['playlists'], 'readonly').objectStore('playlists').getAll().onsuccess = e => {
-    playlists = e.target.result;
-    renderPlaylistList();
-    if(activePlaylistId) selectPlaylist(activePlaylistId);
-  };
+  db.transaction(['playlists'], 'readonly')
+    .objectStore('playlists').getAll().onsuccess = e => {
+      playlists = e.target.result;
+      renderPlaylistList();
+      if(activePlaylistId) selectPlaylist(activePlaylistId);
+    };
 }
 
 function renderPlaylistList() {
   playlistListEl.innerHTML = '';
   playlists.forEach(p => {
     const li = document.createElement('li');
-    li.className = p.id === activePlaylistId ? 'active' : '';
+    if (p.id === activePlaylistId) li.classList.add('active');
 
-    const span = document.createElement('span'); 
-    span.textContent = p.name; 
-    span.style.flex='1';
+    const span = document.createElement('span');
+    span.textContent = p.name;
+    span.style.flex = '1';
     span.onclick = () => selectPlaylist(p.id);
 
-    const editBtn = document.createElement('button');
-    editBtn.textContent='✎'; editBtn.className='edit-btn';
-    editBtn.onclick = e => {
+    const edit = document.createElement('button');
+    edit.textContent = '✎';
+    edit.className = 'edit-btn';
+    edit.onclick = e => {
       e.stopPropagation();
-      const newName = prompt('Введите новое название плейлиста:', p.name);
-      if(newName) {
+      const newName = prompt('Новое название:', p.name);
+      if(newName){
         p.name = newName;
-        const tx = db.transaction(['playlists'],'readwrite'); tx.objectStore('playlists').put(p);
-        loadPlaylists();
+        db.transaction(['playlists'],'readwrite')
+          .objectStore('playlists').put(p).onsuccess = loadPlaylists;
       }
     };
 
-    const delBtn = document.createElement('button');
-    delBtn.textContent='✕'; delBtn.className='delete-btn';
-    delBtn.onclick = e => {
+    const del = document.createElement('button');
+    del.textContent='✕';
+    del.className='delete-btn';
+    del.onclick = e => {
       e.stopPropagation();
-      if(confirm('Удалить плейлист?')) {
-        const tx = db.transaction(['playlists'],'readwrite'); tx.objectStore('playlists').delete(p.id);
-        if(activePlaylistId===p.id) { playlist=[]; activePlaylistId=null; playlistEl.innerHTML=''; audioPlayer.src=''; }
+      if(confirm('Удалить плейлист?')){
+        db.transaction(['playlists'],'readwrite')
+          .objectStore('playlists').delete(p.id);
+        if(p.id===activePlaylistId){
+          playlist = [];
+          activePlaylistId = null;
+          audioPlayer.src = '';
+        }
         loadPlaylists();
       }
     };
 
     li.appendChild(span);
-    li.appendChild(editBtn);
-    li.appendChild(delBtn);
+    li.appendChild(edit);
+    li.appendChild(del);
     playlistListEl.appendChild(li);
   });
 }
 
-// ===== Выбор плейлиста =====
 function selectPlaylist(id) {
   activePlaylistId = id;
-  const pl = playlists.find(p=>p.id===id);
-  playlist = pl.tracks.map(t=>({ name: t.name, blob: t.blob, url: URL.createObjectURL(t.blob) }));
+  const pl = playlists.find(x=>x.id===id);
+  playlist = pl.tracks.map(t => ({ name: t.name, blob: t.blob, url: URL.createObjectURL(t.blob) }));
   currentIndex = 0;
   renderPlaylist();
   if(playlist.length) playTrack();
 }
 
-// ===== Добавление треков =====
 fileInput.onchange = () => {
-  if(activePlaylistId===null){ alert('Сначала выберите плейлист!'); return; }
-  const files = Array.from(fileInput.files);
-  const pl = playlists.find(p=>p.id===activePlaylistId);
-  files.forEach(f => { 
+  if(activePlaylistId===null) return alert("Выберите плейлист!");
+  const files = [...fileInput.files];
+  const pl = playlists.find(x=>x.id===activePlaylistId);
+
+  files.forEach(f=>{
     const track = { name: f.name, blob: f, url: URL.createObjectURL(f) };
-    pl.tracks.push(track); 
-    playlist.push(track); 
+    pl.tracks.push(track);
+    playlist.push(track);
   });
+
   renderPlaylist();
-  const tx = db.transaction(['playlists'], 'readwrite');
-  tx.objectStore('playlists').put(pl);
+  db.transaction(['playlists'],'readwrite')
+    .objectStore('playlists').put(pl);
 };
 
-// ===== Рендер треков =====
 function renderPlaylist() {
-  playlistEl.innerHTML='';
-  playlist.forEach((track,index)=>{
+  playlistEl.innerHTML = '';
+  playlist.forEach((t,i)=>{
     const li = document.createElement('li');
-    li.className = index===currentIndex?'active':'';
-    const span = document.createElement('span'); span.textContent=track.name; span.style.flex='1';
-    span.onclick = () => { currentIndex=index; playTrack(); };
-    const del = document.createElement('button'); del.textContent='✕'; del.className='delete-btn';
-    del.onclick = e => { 
-      e.stopPropagation(); 
-      playlist.splice(index,1); 
+    if(i===currentIndex) li.classList.add('active');
+
+    const span=document.createElement('span');
+    span.textContent=t.name;
+    span.style.flex='1';
+    span.onclick=()=>{ currentIndex=i; playTrack(); };
+
+    const del=document.createElement('button');
+    del.textContent='✕';
+    del.className='delete-btn';
+    del.onclick=e=>{
+      e.stopPropagation();
+      playlist.splice(i,1);
       const pl = playlists.find(p=>p.id===activePlaylistId);
-      pl.tracks.splice(index,1);
-      const tx = db.transaction(['playlists'],'readwrite'); tx.objectStore('playlists').put(pl);
+      pl.tracks.splice(i,1);
+      db.transaction(['playlists'],'readwrite')
+        .objectStore('playlists').put(pl);
       if(currentIndex>=playlist.length) currentIndex=playlist.length-1;
-      renderPlaylist(); 
+      renderPlaylist();
       if(playlist.length) playTrack(); else audioPlayer.src='';
     };
-    li.appendChild(span); li.appendChild(del);
+
+    li.appendChild(span);
+    li.appendChild(del);
     playlistEl.appendChild(li);
   });
 }
 
-// ===== История =====
 function loadHistory() {
-  db.transaction(['history'], 'readonly').objectStore('history').getAll().onsuccess = e => { history = e.target.result.slice(-5).reverse(); renderHistory(); };
+  db.transaction(['history'],'readonly')
+    .objectStore('history').getAll().onsuccess = e => {
+      history = e.target.result.slice(-5).reverse();
+      renderHistory();
+    };
 }
-function saveHistoryTrack(track) { db.transaction(['history'], 'readwrite').objectStore('history').add({ name: track.name, blob: track.blob }); }
-function renderHistory() { historyEl.innerHTML=''; history.forEach(t=>{ const li=document.createElement('li'); li.textContent='🎵 '+t.name; li.onclick=()=>{ const idx=playlist.findIndex(x=>x.name===t.name); if(idx!==-1){ currentIndex=idx; playTrack(); } }; historyEl.appendChild(li); }); }
 
-// ===== Воспроизведение =====
-function playTrack() { if(!playlist.length) return; const tr=playlist[currentIndex]; audioPlayer.src=tr.url; audioPlayer.play(); renderPlaylist(); updateHistory(tr); }
-function updateHistory(track) { history=history.filter(t=>t.name!==track.name); history.unshift(track); if(history.length>5) history.pop(); renderHistory(); saveHistoryTrack(track); }
+function renderHistory() {
+  historyEl.innerHTML = '';
+  history.forEach(t=>{
+    const li=document.createElement('li');
+    li.textContent='🎵 '+t.name;
+    li.onclick=()=>{
+      const idx = playlist.findIndex(x=>x.name===t.name);
+      if(idx!==-1){ currentIndex=idx; playTrack(); }
+    };
+    historyEl.appendChild(li);
+  });
+}
 
-// ===== Кнопки =====
-prevBtn.onclick = ()=>{ if(!playlist.length)return; currentIndex=(currentIndex-1+playlist.length)%playlist.length; playTrack(); };
-nextBtn.onclick = ()=>{ if(!playlist.length)return; currentIndex=(currentIndex+1)%playlist.length; playTrack(); };
+function saveHistoryTrack(track) {
+  db.transaction(['history'],'readwrite')
+    .objectStore('history').add({ name: track.name, blob: track.blob });
+}
+
+/* 🔥 ФУНКЦИЯ ПОДСВЕТКИ АКТИВНОГО ПЛЕЙЛИСТА */
+function highlightActivePlaylist() {
+  const items = playlistListEl.querySelectorAll('li');
+  items.forEach(li => li.classList.remove('active'));
+
+  const active = [...items].find(li =>
+    li.querySelector('span').textContent === playlists.find(p => p.id === activePlaylistId)?.name
+  );
+  if(active) active.classList.add('active');
+}
+
+function playTrack() {
+  if (!playlist.length) return;
+  const tr = playlist[currentIndex];
+  audioPlayer.src = tr.url;
+  audioPlayer.play();
+
+  renderPlaylist();
+  updateHistory(tr);
+  highlightActivePlaylist(); // 🔥 подсветка плейлиста
+}
+
+function updateHistory(track) {
+  history = history.filter(t=>t.name!==track.name);
+  history.unshift(track);
+  if(history.length>5) history.pop();
+  renderHistory();
+  saveHistoryTrack(track);
+}
+
+prevBtn.onclick = ()=>{ currentIndex=(currentIndex-1+playlist.length)%playlist.length; playTrack(); };
+nextBtn.onclick = ()=>{ currentIndex=(currentIndex+1)%playlist.length; playTrack(); };
 audioPlayer.onended = ()=>{ currentIndex=(currentIndex+1)%playlist.length; playTrack(); };
-randomBtn.onclick = ()=>{ if(!playlist.length)return; currentIndex=Math.floor(Math.random()*playlist.length); playTrack(); };
-shuffleBtn.onclick = ()=>{ if(!playlist.length)return; for(let i=playlist.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [playlist[i],playlist[j]]=[playlist[j],playlist[i]]; } currentIndex=0; const pl = playlists.find(p=>p.id===activePlaylistId); pl.tracks = playlist.map(t=>({name:t.name,blob:t.blob})); const tx = db.transaction(['playlists'],'readwrite'); tx.objectStore('playlists').put(pl); renderPlaylist(); playTrack(); };
-const togglePlaylistsBtn = document.getElementById('togglePlaylists');
-const playlistsWrapper = document.getElementById('playlistsWrapper');
+randomBtn.onclick = ()=>{ currentIndex=Math.floor(Math.random()*playlist.length); playTrack(); };
 
-togglePlaylistsBtn.onclick = () => {
-  playlistsWrapper.classList.toggle('open');
+shuffleBtn.onclick = ()=>{
+  for(let i=playlist.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [playlist[i],playlist[j]]=[playlist[j],playlist[i]];
+  }
+  currentIndex=0;
+  const pl=playlists.find(p=>p.id===activePlaylistId);
+  pl.tracks=playlist.map(t=>({name:t.name,blob:t.blob}));
+  db.transaction(['playlists'],'readwrite')
+    .objectStore('playlists').put(pl);
+  renderPlaylist();
+  playTrack();
 };
 
-
+document.getElementById('togglePlaylists').onclick = () => {
+  document.getElementById('playlistsWrapper').classList.toggle('open');
+};
 </script>
+
 </body>
 </html>
