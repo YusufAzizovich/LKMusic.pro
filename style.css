@@ -1,0 +1,153 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: radial-gradient(circle at top, #121212 0%, #0a0a0a 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+
+
+}
+
+h2 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #00ccff, #00ff88);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0,255,136,0.5), 0 0 25px rgba(0,204,255,0.4);
+  animation: glowShift 6s ease-in-out infinite alternate;
+}
+
+@keyframes glowShift {
+  from { text-shadow: 0 0 10px #00ff88, 0 0 25px #00ccff; }
+  to   { text-shadow: 0 0 10px #00ccff, 0 0 25px #00ff88; }
+}
+
+input[type="file"], button {
+  margin: 10px 5px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #00ffcc66;
+  background: #222;
+  color: #00ffcc;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button { background: linear-gradient(90deg, #00ccff, #00ff88); color: #000; font-weight: bold; border: none; }
+button:hover { transform: scale(1.07); } 
+button:active { transform: scale(0.96); }
+
+.player-box {
+  padding: 12px;
+  border-radius: 15px;
+  background: linear-gradient(270deg, #00ccff, #00ff88, #00ccff);
+  background-size: 400% 400%;
+  animation: gradientMove 6s ease infinite;
+  box-shadow: 0 0 20px rgba(0,255,136,0.5), 0 0 30px rgba(0,204,255,0.5);
+  margin-bottom: 20px;
+}
+audio {
+  width: 320px;
+  border-radius: 10px;
+  background: #0d0d0d;
+}
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.flex-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 700px;
+}
+
+.list-box {
+  flex: 1;
+  min-width: 150px;
+  background: rgba(40,40,40,0.7);
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 0 0 15px rgba(0,255,136,0.3);
+}
+
+.list-box h3 {
+  text-align: center;
+  margin-top: 0;
+  color: #00ffcc;
+}
+
+ul { list-style: none; padding: 0; margin: 0; }
+li {
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.2);
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.25s;
+}
+li:hover { background: rgba(0,255,136,0.15); transform: translateX(3px); }
+li.active { background: rgba(0,255,136,0.15); }
+
+.delete-btn {
+  background: #ff3b3b;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 8px;
+  margin-left:5px;
+}
+.delete-btn:hover { background: #ff6666; }
+
+.edit-btn {
+  background: #ffaa00;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 8px;
+  margin-left:5px;
+}
+.edit-btn:hover { background: #ffcc33; }
+
+.history-title { font-weight: bold; text-align: center; color: #00ffcc; margin-bottom: 8px; }
+.toggle-btn {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(90deg, #00ccff, #00ff88);
+  border: none;
+  border-radius: 12px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: 0.3s;
+}
+.toggle-btn:hover {
+  transform: scale(1.03);
+}
+
+.collapsible {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+.collapsible.open {
+  opacity: 1;
+  max-height: 500px;
+}
